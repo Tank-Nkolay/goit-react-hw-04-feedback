@@ -14,40 +14,36 @@ class Feedback extends React.Component {
     bad: 0,
   };
 
-  handleIncrimenteGood = () => {
+  stateKeys = Object.keys(this.state);
+
+  options = this.stateKeys;
+
+  handleFeedbackСlick = option => {
     this.setState(prevState => ({
-      good: prevState.good + 1,
-    }));
-  };
-  handleIncrimenteNeutral = () => {
-    this.setState(prevState => ({
-      neutral: prevState.neutral + 1,
-    }));
-  };
-  handleIncrimenteBad = () => {
-    this.setState(prevState => ({
-      bad: prevState.bad + 1,
+      [option]: prevState[option] + 1,
     }));
   };
 
-  countTotalFeedback() {
-    return this.state.good + this.state.neutral + this.state.bad;
-  }
+  countTotalFeedback = () => {
+    return Object.values(this.state).reduce((acc, value) => acc + value, 0);
+  };
 
-  countPositiveFeedbackPercentage() {
+  countPositiveFeedbackPercentage = () => {
     return Math.floor((this.state.good / this.countTotalFeedback()) * 100);
-  }
+  };
+  // ==============================================
 
   // {this.state.visible ? 'Скрыть' : 'Показать'}
   render() {
+    const { good, neutral, bad } = this.state;
+
     return (
       <Markup>
         <Title>Please leave feedback</Title>
         <Section title="">
           <FeedbackOptions
-            clickGood={this.handleIncrimenteGood}
-            clickNeutral={this.handleIncrimenteNeutral}
-            clickBad={this.handleIncrimenteBad}
+            options={this.stateKeys}
+            onLeaveFeedback={this.handleFeedbackСlick}
           />
         </Section>
 
@@ -55,9 +51,9 @@ class Feedback extends React.Component {
         <Section title="">
           {this.countTotalFeedback() > '0' ? (
             <Statistics
-              good={this.state.good}
-              neutral={this.state.neutral}
-              bad={this.state.bad}
+              good={good}
+              neutral={neutral}
+              bad={bad}
               total={this.countTotalFeedback()}
               positivePercentage={this.countPositiveFeedbackPercentage()}
             />
