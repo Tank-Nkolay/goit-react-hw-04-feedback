@@ -7,7 +7,7 @@ import Notification from '../Notification/Notification';
 import { Markup, Title, TitleStatistics } from './Feedback.styled.jsx';
 
 export default function Feedback() {
-  // Передаем стартовое значение ===
+  // Передаем стартовое значение =====
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
